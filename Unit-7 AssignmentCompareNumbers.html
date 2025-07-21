@@ -23,12 +23,13 @@
     } else {
       resultSpan.innerHTML = "Both value are equal.";
     }
-
-    window.onload = function() {
-      document.getElementById("form1").addEventListener("submit", compareNumbers);
-      document.getElementById("button").addEventListener("click", resetForm);
-    }
   }
+  
+  window.onload = function() {
+    document.getElementById("form1").addEventListener("submit", compareNumbers);
+    document.getElementById("button").addEventListener("click", resetForm);
+  };
+
 
   function resetForm() {
     document.getElementById("form1").reset();
@@ -52,7 +53,7 @@
   <p>Value 2: 
     <input type="text" name="value2" id="value2" />
   </p>
-  <p>Result:   </p>
+  <p>Result: <span id="result"></span></p>
   <p>
     <input type="submit" value="Compare Numbers" />
   </p>
