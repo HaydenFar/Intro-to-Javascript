@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>WDV2221 Intro Javascript</title>
+  <style>
+    body {
+      background-color: #ddeeda;
+    }
+
+    .highlightTitle {
+      font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+      font-style: italic;
+      font-size: 14px;
+      text-decoration: underline;
+      color: #096;
+    }
+  </style>
+</head>
+<body>
+  <h1>WDV2221 Intro JavaScript</h1>
+  <h2>Unit-10 Assignment - Inventory Management with JSON</h2>
+
+  <h3>Problem 1</h3>
+  <p>Display the item information by converting the JSON string to an Object and referencing the object properties in combination with string concatenation.</p>
+  <div id="problem1Output"></div>
+
+  <h3>Problem 2</h3>
+  <p>
+    Enter an item name and press the button to look up its inventory count from a predefined list.
+  </p>
+
+  <form id="inventoryForm" onsubmit="return false;">
+    <p>Item <input type="text" id="newItemName" required /></p>
+    <p><input type="button" value="Find Inventory Count" id="convertButton" /></p>
+    <p id="output" class="highlightTitle"></p>
+  </form>
+
+  <script>
+    // Problem 1
+    var item = '{"itemName":"Book", "inventoryCount":10}';
+    var itemObj = JSON.parse(item);
+    document.getElementById("problem1Output").innerHTML =
+      "Item: " + itemObj.itemName + "<br>" +
+      "Amount in Stock: " + itemObj.inventoryCount;
+
+    // Problem 2 - Inventory list as JSON
+    var inventoryList = [
+      { itemName: "Book", inventoryCount: 10 },
+      { itemName: "Pen", inventoryCount: 25 },
+      { itemName: "Notebook", inventoryCount: 15 },
+      { itemName: "Eraser", inventoryCount: 5 }
+    ];
+
+    function findInventoryCount() {
+      var inputName = document.getElementById("newItemName").value.trim().toLowerCase();
+      var output = document.getElementById("output");
+
+      var foundItem = inventoryList.find(function(item) {
+        return item.itemName.toLowerCase() === inputName;
+      });
+
+      if (foundItem) {
+        output.innerText = "Item: " + foundItem.itemName + ", Amount in Stock: " + foundItem.inventoryCount;
+      } else {
+        output.innerText = "Item not found in inventory.";
+      }
+    }
+
+    document.getElementById("convertButton").onclick = findInventoryCount;
+  </script>
+</body>
+</html>
