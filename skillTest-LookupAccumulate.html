@@ -1,0 +1,108 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>WDV221 Intro Javascript</title>
+  <script>
+    // Global arrays
+    var teamNames = ["Bears", "Browns", "Reds"];
+    var teamScores = [3, 7, 4];
+
+    // Lookup function
+    function lookupNames(inName) {
+      for (let i = 0; i < teamNames.length; i++) {
+        if (inName.toLowerCase() === teamNames[i].toLowerCase()) {
+          return i;
+        }
+      }
+      return -1;
+    }
+
+    // Get score input
+    function getScore() {
+      return parseInt(document.getElementById("inputScore").value);
+    }
+
+    // Process name + score
+    function processTeamNames() {
+      document.getElementById("outputResponse").innerHTML = "";
+
+      let name = document.getElementById("inputName").value.trim();
+      let score = getScore();
+
+      if (name === "" || isNaN(score)) {
+        document.getElementById("outputResponse").innerHTML = "Please enter a valid team name and score.";
+        return;
+      }
+
+      let index = lookupNames(name);
+
+      if (index === -1) {
+        // New team
+        teamNames.push(name);
+        teamScores.push(score);
+        document.getElementById("outputResponse").innerHTML = name + " was added with score " + score + ".";
+      } else {
+        teamScores[index] += score;
+        document.getElementById("outputResponse").innerHTML = name + " now has " + teamScores[index] + " points.";
+      }
+
+      displayAllTeams();
+    }
+
+    // Display all teams and scores
+    function displayAllTeams() {
+      let output = "";
+      for (let i = 0; i < teamNames.length; i++) {
+        output += teamNames[i] + ": " + teamScores[i] + "<br>";
+      }
+      document.getElementById("teamDisplayList").innerHTML = output;
+    }
+
+    // Clear everything on reset
+    function resetForm() {
+      document.getElementById("form1").reset();
+      document.getElementById("outputResponse").innerHTML = "";
+      document.getElementById("teamDisplayList").innerHTML = "";
+    }
+  </script>
+</head>
+
+<body>
+  <h1>WDV221 Intro Javascript</h1>
+  <h2>Skill Test - Lookup and Accumulate Arrays</h2>
+
+  <form id="form1" method="post">
+    <fieldset>
+      <legend>Team Scores</legend>
+      <p>
+        <label>Team Name:
+          <input type="text" id="inputName">
+        </label>
+      </p>
+      <p>
+        <label>Team Score:
+          <input type="text" id="inputScore">
+        </label>
+      </p>
+      <p>Current Status: <span id="outputResponse"></span></p>
+      <p>
+        <input type="button" value="Process Team Names" onclick="processTeamNames()">
+        <input type="reset" value="Reset" onclick="resetForm()">
+        <input type="button" value="Display All Teams" onclick="displayAllTeams()">
+      </p>
+    </fieldset>
+  </form>
+
+  <h3>Team Scoreboard</h3>
+  <div id="teamDisplayList"></div>
+
+  <h3>Instructions:</h3>
+  <ol>
+    <li>Modify the Reset to clear the current status.</li>
+    <li>When you enter a team that is not in the teamNames array, add it to the teamNames array and add the score to the teamScores array.</li>
+    <li>Add a function that will display all teams and their current score on the page. Call this from processTeamNames().</li>
+    <li>Add a button to display all teams and their current score on the page.</li>
+  </ol>
+</body>
+</html>
