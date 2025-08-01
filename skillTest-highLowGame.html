@@ -1,0 +1,98 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>WDV221 Intro Javascript</title>
+  <style>
+    #highLowResult {
+      padding: 5px;
+      display: inline-block;
+    }
+    #guessCountDisplay {
+      font-weight: bold;
+      padding: 5px;
+      display: inline-block;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>WDV221 Intro Javascript</h1>
+
+  <h2>Skill Test - Finish High-Low Game</h2>
+
+  <form name="highLowForm" id="highLowForm" method="post" action="">
+    <fieldset>
+      <legend>High Low Game</legend>
+      <p>
+        <label>Input a number from 1-10
+          <input type="text" name="inputGuess" id="inputGuess">
+        </label>
+      </p>
+      <p>Result! <span id="highLowResult"></span></p>
+      <p>Guesses Made: <span id="guessCountDisplay">0</span></p>
+      <p>
+        <input type="button" name="makeGuess" id="makeGuess" value="Make a Guess">
+        <input type="button" name="resetHighLowGame" id="resetHighLowGame" value="Reset">
+      </p>
+    </fieldset>
+  </form>
+
+  <h3>Instructions:</h3>
+  <p>1. Complete the highLowGame function to play the game. </p>
+  <p>2. Change the function to include a guess counter. Display the number of guesses each time.</p>
+  <p>3. Change the background color of the Result area to light blue for a correct answer. </p>
+  <p>4. If the users takes more than 4 guesses change the background of the guess counter display to light red.</p>
+  <p>5. Change the reset function to reset the presentation changes.</p>
+
+  <script>
+    // Global variables
+    const numberToGuess = Math.floor(Math.random() * 10) + 1;
+    let guessCount = 0;
+
+    function highLowGame() {
+      const inValue = parseInt(document.getElementById("inputGuess").value);
+      const result = document.getElementById("highLowResult");
+      const guessCounter = document.getElementById("guessCountDisplay");
+
+      if (isNaN(inValue) || inValue < 1 || inValue > 10) {
+        result.innerHTML = "Please enter a number between 1 and 10.";
+        result.style.backgroundColor = "";
+        return;
+      }
+
+      guessCount++;
+      guessCounter.textContent = guessCount;
+
+      if (guessCount > 4) {
+        guessCounter.style.backgroundColor = "lightcoral";
+      }
+
+      if (inValue === numberToGuess) {
+        result.innerHTML = "Congratulations! That is the number.";
+        result.style.backgroundColor = "lightblue";
+      } else if (inValue < numberToGuess) {
+        result.innerHTML = "Too low. Try again.";
+        result.style.backgroundColor = "";
+      } else {
+        result.innerHTML = "Too high. Try again.";
+        result.style.backgroundColor = "";
+      }
+    }
+
+    function resetHighLowGame() {
+      document.getElementById("highLowForm").reset();
+      document.getElementById("highLowResult").innerHTML = "";
+      document.getElementById("highLowResult").style.backgroundColor = "";
+      guessCount = 0;
+      const guessCounter = document.getElementById("guessCountDisplay");
+      guessCounter.textContent = "0";
+      guessCounter.style.backgroundColor = "";
+    }
+
+    // Assign event listeners
+    document.getElementById("makeGuess").addEventListener("click", highLowGame);
+    document.getElementById("resetHighLowGame").addEventListener("click", resetHighLowGame);
+  </script>
+</body>
+</html>
