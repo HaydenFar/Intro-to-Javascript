@@ -1,0 +1,129 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>WDV221 Intro Javascript</title>
+</head>
+
+<body>
+<h1>WDV221 Intro Javascript</h1>
+<h2>Skill Test - Loops and Arrays</h2>
+
+<form name="form1" method="post" action="">
+  <fieldset>
+  	<legend>Your Input Matters</legend>
+
+  	<label>1. Which product did you purchase?
+  	  <select name="selectProduct" id="selectProduct"></select>
+  	</label>
+    <br><br>
+
+    <!-- 2. Radio buttons inserted dynamically -->
+    <div id="radioButtonsSection"></div>
+
+    <br>
+
+    <!-- 3. Checkboxes inserted dynamically -->
+    <div id="checkBoxSection"></div>
+
+  	<br>
+  	<input type="submit" name="button" id="button" value="Submit">
+  	<input type="reset" name="button2" id="button2" value="Reset">
+  </fieldset>
+</form>
+
+<h2>4. Special Item Offer!</h2>
+<div id="specialItemDisplay"></div>
+
+<h3>Instructions:</h3>
+<p>1. Use the products array and the productNumber array to dynamically populate the select menu. Include the productNumbers as value attributes.</p>
+<p>2. Use the selectionFactors array to dynamically create a set of radio buttons. </p>
+<p>3. Use the references array to dynamically create a set of check boxes. </p>
+<p>4. Convert the specialItem JSON String to a JSON Object and then display the data under the "4. Special Item Offer!" header.</p>
+
+<script>
+  // Arrays
+  const products = ["Garden Trowel", "Yard Spade", "Planting Spade"];
+  const productNumber = ["gt200", "yard-1", "plant-4"];
+  const selectionFactors = ["Price", "Quality", "Reviews", "Pictures"];
+  const references = ["Field and Stream", "Home and Garden", "Plant Life"];
+
+  window.onload = function () {
+    populateProductDropdown();
+    createRadioButtons();
+    createCheckBoxes();
+    displaySpecialItem();
+  };
+
+  function populateProductDropdown() {
+    const selectMenu = document.getElementById("selectProduct");
+    for (let i = 0; i < products.length; i++) {
+      const option = document.createElement("option");
+      option.value = productNumber[i];
+      option.textContent = products[i];
+      selectMenu.appendChild(option);
+    }
+  }
+
+  function createRadioButtons() {
+    const container = document.getElementById("radioButtonsSection");
+    const label = document.createElement("p");
+    label.textContent = "2. Please choose the primary factor in why you purchased our product:";
+    container.appendChild(label);
+
+    selectionFactors.forEach((factor, i) => {
+      const radio = document.createElement("input");
+      radio.type = "radio";
+      radio.name = "factor";
+      radio.id = "factor" + i;
+      radio.value = factor;
+
+      const radioLabel = document.createElement("label");
+      radioLabel.htmlFor = radio.id;
+      radioLabel.textContent = " " + factor;
+
+      container.appendChild(radio);
+      container.appendChild(radioLabel);
+      container.appendChild(document.createElement("br"));
+    });
+  }
+
+  function createCheckBoxes() {
+    const container = document.getElementById("checkBoxSection");
+    const label = document.createElement("p");
+    label.textContent = "3. How did you hear about us? Please select all that apply:";
+    container.appendChild(label);
+
+    references.forEach((ref, i) => {
+      const checkbox = document.createElement("input");
+      checkbox.type = "checkbox";
+      checkbox.name = "reference";
+      checkbox.id = "ref" + i;
+      checkbox.value = ref;
+
+      const checkboxLabel = document.createElement("label");
+      checkboxLabel.htmlFor = checkbox.id;
+      checkboxLabel.textContent = " " + ref;
+
+      container.appendChild(checkbox);
+      container.appendChild(checkboxLabel);
+      container.appendChild(document.createElement("br"));
+    });
+  }
+
+  function displaySpecialItem() {
+    const specialItem = '{"itemName":"Magic Beans", "price":10.00, "inventoryCount":1, "isDiscontinued":true}';
+    const item = JSON.parse(specialItem);
+
+    const display = document.getElementById("specialItemDisplay");
+    display.innerHTML = `
+      <p>Item Name: ${item.itemName}</p>
+      <p>Price: $${item.price}</p>
+      <p>Count: ${item.inventoryCount}</p>
+      <p>Limited Time Offer: ${item.isDiscontinued}</p>
+    `;
+  }
+</script>
+
+</body>
+</html>
